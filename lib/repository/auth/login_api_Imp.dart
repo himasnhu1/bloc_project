@@ -4,7 +4,7 @@ import '../../data/network/network_api_http.dart';
 import '../../utils/ApiString/api_url.dart';
 import 'login_repository.dart';
 
-class LoginApiImp extends LoginRepository {
+class LoginApiImp implements LoginRepository {
   final networkApi = NetworkApiServiceHttp();
   final networkDio = NetworkApiService();
 

@@ -1,7 +1,7 @@
 import '../../model/user/user_model.dart';
 import 'login_repository.dart';
 
-class LoginMockImp extends LoginRepository{
+class LoginMockImp implements LoginRepository{
 
   @override
   Future<UserModel> loginAuth(data) {

@@ -1,5 +1,5 @@
 import 'package:bloc/bloc.dart';
-import 'package:bloc_project/repository/auth/login_httpapi.dart';
+import 'package:bloc_project/repository/auth/login_api_Imp.dart';
 import 'package:bloc_project/repository/auth/login_repository.dart';
 import 'package:bloc_project/utils/enum.dart';
 import 'package:equatable/equatable.dart';
@@ -21,13 +21,15 @@ class LoginBloc extends Bloc<LoginEvents, LoginStates> {
       print(event.email);
     }
     if (event.email.isNotEmpty) {
-      emit(state.copyWith(
-          message: 'Login Successful', postApiStatus: PostApiStatus.error));
+      emit(state.copyWith(postApiStatus: PostApiStatus.error));
     }
     emit(state.copyWith(email: event.email));
   }
 
   void _onPasswordChanged(PasswordChanged event, Emitter<LoginStates> emit) {
+    if (event.password.isNotEmpty) {
+      emit(state.copyWith(postApiStatus: PostApiStatus.error));
+    }
     emit(state.copyWith(passwords: event.password));
   }
   //{"email": "Monu8273@gmail.com", "password": "1234567"};
@@ -48,19 +50,22 @@ class LoginBloc extends Bloc<LoginEvents, LoginStates> {
     try {
       final value = await loginApiImp.loginAuth(data);
 
-      if (value.error.isEmpty) {
+      if (value.error.isNotEmpty) {
         emit(state.copyWith(
-          message: 'Login Successful',
-          postApiStatus: PostApiStatus.success,
+          message: value.error.toString(),
+          postApiStatus: PostApiStatus.error,
         ));
       } else {
-        emit(state.copyWith(
-          message: value.error,
-          postApiStatus: PostApiStatus.error,
+         emit(state.copyWith(
+          message: value.token.toString(),
+          postApiStatus: PostApiStatus.success,
         ));
       }
     } catch (error) {
-      emit(state.copyWith(
+
+      debugPrint("Error===>${error.toString()}");
+
+       emit(state.copyWith(
         message: error.toString(),
         postApiStatus: PostApiStatus.error,
       ));

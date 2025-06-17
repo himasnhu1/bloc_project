@@ -24,7 +24,8 @@ class _SplashScreenState extends State<SplashScreen> {
 
       body: SafeArea(
           child: Center(
-            child: Column(
+            child: Column(crossAxisAlignment:CrossAxisAlignment.center,
+              mainAxisAlignment:MainAxisAlignment.center,
               children: [
                 Center(
                   child: const Text("Splash Screen",style:TextStyle(fontSize:30,fontWeight:FontWeight.bold,color:Colors.red),),

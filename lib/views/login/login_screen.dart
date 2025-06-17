@@ -22,16 +22,15 @@ class _LoginScreenState extends State<LoginScreen> {
   final _formLogin = GlobalKey<FormState>();
   bool obscurePassword = true;
   late LoginBloc _loginBloc;
+
+
   @override
   void initState() {
-    
+    emailController.text ='eve.holt@reqres.in';
+    passwordController.text ='1234567';
 
-
-    // emailController.text ='eve.holt@reqres.in';
-    // passwordController.text ='1234567';
-
-       emailController.text ='Monu8273@gmail.com"';
-     passwordController.text ='1234567';
+     // emailController.text ='Monu8273@gmail.com"';
+     // passwordController.text ='1234567';
 
     _loginBloc = LoginBloc();
     // TODO: implement initState
@@ -96,7 +95,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   PasswordInputWidget(
                       controller: passwordController,
                       focusNode: focusNodePassword,
-                      obscureText: true,
+                      obscureText: obscurePassword,
                       hintText: "Enter Password",
                       validator: (String? value) {
                         if (value!.isEmpty) {

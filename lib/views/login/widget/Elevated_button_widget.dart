@@ -10,7 +10,10 @@ class ElevatedButtonWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<LoginBloc, LoginStates>(listener: (context, state) {
+    return BlocListener<LoginBloc, LoginStates>(   listenWhen: (current, previous) =>
+    current.postApiStatus != previous.postApiStatus,
+        listener: (context, state) {
+          debugPrint("POST APi===>${state.postApiStatus.toString()}");
       if (state.postApiStatus == PostApiStatus.error) {
         ScaffoldMessenger.of(context)
           ..hideCurrentSnackBar()
@@ -27,21 +30,23 @@ class ElevatedButtonWidget extends StatelessWidget {
           ..showSnackBar(SnackBar(content: Text("Submitting.....")));
       }
     }, child: BlocBuilder<LoginBloc, LoginStates>(
+      buildWhen:(current,previous)=>false,
       builder: (context, state) {
         return ElevatedButton(
+
             child: Text('Sign In'),
             onPressed: () async {
               if (formKey.currentState.validate() == false) {
                 // return null;
               } else {
-                if (state.passwords.length < 4) {
-                  print(state.passwords.length);
-                  if (kDebugMode) {
-                    print('Enter Password  greater then 6');
-                  }
-                } else {
+                // if (state.passwords.length < 4) {
+                //   debugPrint(state.passwords.length.toString());
+                //   if (kDebugMode) {
+                //     debugPrint('Enter Password  greater then 6');
+                //   }
+                // } else {
                   context.read<LoginBloc>().add(LoginApi());
-                }
+                // }
               }
             });
       },

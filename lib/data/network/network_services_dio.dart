@@ -15,7 +15,7 @@ class NetworkApiService extends BaseApiServices {
             receiveTimeout: const Duration(seconds: 100),
             headers: {
               'Content-Type': 'application/json',
-              // 'x-api-key': 'reqres-free-v1'
+              'x-api-key': 'reqres-free-v1'
             },
           ),
         ) {
@@ -37,8 +37,6 @@ class NetworkApiService extends BaseApiServices {
           // if (accessToken != null && accessToken.isNotEmpty) {
 
           // options.headers['x-api-key'] = 'reqres-free-v1';
-
-
 
           // print("Bearer    ${userdata.read("_Token")}");
           // } else {
@@ -92,7 +90,7 @@ class NetworkApiService extends BaseApiServices {
       responseJson = returnResponse(response);
     } on DioException catch (e) {
       if (CancelToken.isCancel(e)) {
-        // debugPrint("Request canceled: ${e.message}");
+        debugPrint("Request canceled: ${e.message}");
       } else {
         handleDioError(e);
       }
@@ -154,7 +152,6 @@ class NetworkApiService extends BaseApiServices {
   }
 
   dynamic returnResponse(Response response) {
-    print("response==>${response.data}");
     switch (response.statusCode) {
       case 200:
       case 201:
@@ -164,9 +161,8 @@ class NetworkApiService extends BaseApiServices {
 
   void handleDioError(DioException e) {
     if (e.response != null) {
+      debugPrint("StatusCode:${e.response!.statusCode.toString()}");
       // Parse the error response
-      final errorData = e.response?.data;
-
       // Handle HTTP status codes centrally
       switch (e.response!.statusCode) {
         case 400:
