@@ -36,7 +36,7 @@ class NetworkApiService extends BaseApiServices {
           // print('Request: ${options.method} ${options.uri}');
           // if (accessToken != null && accessToken.isNotEmpty) {
 
-          // options.headers['x-api-key'] = 'reqres-free-v1';
+          options.headers['x-api-key'] = 'reqres-free-v1';
 
           // print("Bearer    ${userdata.read("_Token")}");
           // } else {
